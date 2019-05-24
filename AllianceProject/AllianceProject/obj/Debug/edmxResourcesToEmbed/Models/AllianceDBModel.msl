@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AllianeDBModelStoreContainer" CdmEntityContainer="AllianeDB">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="AllianeDBModel.Client">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="familyName" ColumnName="familyName" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="carteFidelite" ColumnName="carteFidelite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

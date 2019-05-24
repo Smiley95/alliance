@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AllianeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'AllianeDB.dbo.Clients' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="10" />
+    <Property Name="familyName" Type="varchar" MaxLength="10" />
+    <Property Name="phone" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varbinary" MaxLength="20" />
+    <Property Name="carteFidelite" Type="varchar" MaxLength="8" />
+  </EntityType>
+  <EntityContainer Name="AllianeDBModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="Self.Clients" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Clients].[ClientID] AS [ClientID], 
+    [Clients].[name] AS [name], 
+    [Clients].[familyName] AS [familyName], 
+    [Clients].[phone] AS [phone], 
+    [Clients].[email] AS [email], 
+    [Clients].[carteFidelite] AS [carteFidelite]
+    FROM [dbo].[Clients] AS [Clients]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
