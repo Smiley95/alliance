@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="familyName" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="phone" Type="varchar" MaxLength="12" />
+          <Property Name="address" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProduitID" />
+          </Key>
+          <Property Name="ProduitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="10" />
+          <Property Name="providerID" Type="int" Nullable="false" />
+          <Property Name="stockQuantity" Type="int" />
+          <Property Name="category" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Providers">
+          <Key>
+            <PropertyRef Name="providerID" />
+          </Key>
+          <Property Name="providerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="nom" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="mdp" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Vente">
+          <Key>
+            <PropertyRef Name="VenteID" />
+          </Key>
+          <Property Name="VenteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateVente" Type="date" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Products_Providers">
+          <End Role="Providers" Type="Self.Providers" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Providers">
+              <PropertyRef Name="providerID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="providerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vente_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vente_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProduitID" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Providers" EntityType="Self.Providers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vente" EntityType="Self.Vente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Products_Providers" Association="Self.FK_Products_Providers">
+            <End Role="Providers" EntitySet="Providers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vente_Clients" Association="Self.FK_Vente_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vente_Products" Association="Self.FK_Vente_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="storeDBModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Providers" EntityType="DBModel.Providers" />
+          <EntitySet Name="Clients" EntityType="DBModel.Clients" />
+          <EntitySet Name="Products" EntityType="DBModel.Products" />
+          <EntitySet Name="Users" EntityType="DBModel.Users" />
+          <EntitySet Name="Vente" EntityType="DBModel.Vente" />
+          <AssociationSet Name="FK_Vente_Clients1" Association="DBModel.FK_Vente_Clients1">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vente_Products1" Association="DBModel.FK_Vente_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Providers" Association="DBModel.FK_Products_Providers">
+            <End Role="Providers" EntitySet="Providers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Providers">
+          <Key>
+            <PropertyRef Name="providerID" />
+          </Key>
+          <Property Name="providerID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="DBModel.FK_Products_Providers" FromRole="Providers" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="familyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vente" Relationship="DBModel.FK_Vente_Clients1" FromRole="Clients" ToRole="Vente" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProduitID" />
+          </Key>
+          <Property Name="ProduitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="providerID" Type="Int32" Nullable="false" />
+          <Property Name="stockQuantity" Type="Int32" />
+          <Property Name="category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vente" Relationship="DBModel.FK_Vente_Products1" FromRole="Products" ToRole="Vente" />
+          <NavigationProperty Name="Providers" Relationship="DBModel.FK_Products_Providers" FromRole="Products" ToRole="Providers" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="nom" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mdp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Vente">
+          <Key>
+            <PropertyRef Name="VenteID" />
+          </Key>
+          <Property Name="VenteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateVente" Type="DateTime" Precision="0" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="DBModel.FK_Vente_Clients1" FromRole="Vente" ToRole="Clients" />
+          <NavigationProperty Name="Products" Relationship="DBModel.FK_Vente_Products1" FromRole="Vente" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_Vente_Clients1">
+          <End Type="DBModel.Clients" Role="Clients" Multiplicity="1" />
+          <End Type="DBModel.Vente" Role="Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vente_Products1">
+          <End Type="DBModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="DBModel.Vente" Role="Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProduitID" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Providers">
+          <End Type="DBModel.Providers" Role="Providers" Multiplicity="1" />
+          <End Type="DBModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Providers">
+              <PropertyRef Name="providerID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="providerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="storeDBModel">
+          <EntitySetMapping Name="Providers">
+            <EntityTypeMapping TypeName="DBModel.Providers">
+              <MappingFragment StoreEntitySet="Providers">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="providerID" ColumnName="providerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DBModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="familyName" ColumnName="familyName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="stockQuantity" ColumnName="stockQuantity" />
+                <ScalarProperty Name="providerID" ColumnName="providerID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ProduitID" ColumnName="ProduitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="mdp" ColumnName="mdp" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vente">
+            <EntityTypeMapping TypeName="DBModel.Vente">
+              <MappingFragment StoreEntitySet="Vente">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="dateVente" ColumnName="dateVente" />
+                <ScalarProperty Name="VenteID" ColumnName="VenteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

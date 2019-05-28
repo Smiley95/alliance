@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="storeDBModel">
+    <EntitySetMapping Name="Providers">
+      <EntityTypeMapping TypeName="DBModel.Providers">
+        <MappingFragment StoreEntitySet="Providers">
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="providerID" ColumnName="providerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="DBModel.Clients">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="familyName" ColumnName="familyName" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="DBModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="stockQuantity" ColumnName="stockQuantity" />
+          <ScalarProperty Name="providerID" ColumnName="providerID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ProduitID" ColumnName="ProduitID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DBModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="mdp" ColumnName="mdp" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vente">
+      <EntityTypeMapping TypeName="DBModel.Vente">
+        <MappingFragment StoreEntitySet="Vente">
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="dateVente" ColumnName="dateVente" />
+          <ScalarProperty Name="VenteID" ColumnName="VenteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
