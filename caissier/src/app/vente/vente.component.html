@@ -1,0 +1,177 @@
+<div class="box">
+  <div class="box-header">
+    <h2 class="box-title">Les achats</h2>
+  </div>
+  <div><button class="btn btn-primary button"  data-toggle="modal" data-target="#modal-add" (click)="empty_obj()">Ajouter</button></div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Produit</th>
+          <th>Quantite achetee</th>
+          <th>Total</th>
+          <th>Date</th>
+          <th>Modifier/Supprimer</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vente of ventes">
+          <td>{{vente.venteID}} </td>
+          <td>{{clients[vente.clientID].name}} {{clients[vente.clientID].familyName}}</td>
+          <td>{{vente.productID}}</td>
+          <td>{{vente.quantity}}</td>
+          <td>{{vente.total}}</td>
+          <td>{{vente.dateVente|date: 'dd/MM/yyyy'}}</td>
+          <td>
+             <button type="button" class="btn btn-primary ml-8px" data-toggle="modal" data-target="#modal-update" (click)=get_one_vente(vente)>
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" (click)="get_one_vente(vente)">
+              <i class="fa fa-trash"></i>
+              </button>
+          </td>
+       </tr>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+
+<div class="modal fade" id="modal-add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Ajouter un nouveau achat</h4>
+      </div>
+      <div class="modal-body">
+        <form #vente_add_form="ngForm">
+          <div class="form-group">
+            <label for="dateVenteUpdate">Date</label>
+            <input type="date" #dateVenteUpdate="ngModel" [(ngModel)]="vente.dateVenteUpdate" class="form-control" [class.is-invalid]="dateVenteUpdate.touched && dateVenteUpdate.invalid" name="dateVenteUpdate" id="dateVenteUpdate" placeholder="Entrer date">
+            <small class="text-danger" [class.d-none]="dateVenteUpdate.untouched || dateVenteUpdate.valid">La date est obligatoire</small>
+          </div>
+          <div class="form-group">
+              <label for="quantite">Quantite</label>
+              <input type="number" #quantite="ngModel"  [(ngModel)]="vente.quantity" name="quantite" class="form-control" [class.is-invalid]="quantite.touched && quantite.invalid" id="quantity" placeholder="Entrer quantite">
+              <small class="text-danger" [class.d-none]="quantite.untouched || quantite.valid">La quantit� est obligatoire</small>
+
+            </div>
+          <div class="form-group">
+              <label for="total">Total</label>
+              <input type="text" #total="ngModel" [(ngModel)]="vente.total" name="total"  class="form-control" [class.is-invalid]="total.touched && total.invalid" id="total" placeholder="Entrer total">
+              <small class="text-danger" [class.d-none]="total.untouched || total.valid">Le total est obligatoire</small>
+
+            </div>
+  
+          <div class="form-group">
+              <label for="name">Client</label>
+              <select (change)="onchange($event.target.value)" name="clientID" class="form-control">
+                  <option *ngFor="let client of clients" [value]="client.clientID">{{client.name}} {{client.familyName}}</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="name">Produit</label>
+            <select (change)="onchange($event.target.value)" name="productID" class="form-control">
+                <option *ngFor="let product of products" [value]="product.productID">{{product.name}}</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="add_vente()" data-dismiss="modal" [disabled]="!vente_add_form.form.valid" >Ajouter achat</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal fade" id="modal-update">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modifier achat</h4>
+      </div>
+      <div class="modal-body">
+          <form #vente_update_form="ngForm">
+              <div class="form-group">
+                <label for="dateVenteUpdate">Date</label>
+                <input type="date" #dateVenteUpdate="ngModel" [(ngModel)]="vente.dateVente" class="form-control" [class.is-invalid]="dateVenteUpdate.touched && dateVenteUpdate.invalid" name="dateVenteUpdate" id="dateVenteUpdate" placeholder="Entrer date">
+                <small class="text-danger" [class.d-none]="dateVenteUpdate.untouched || dateVenteUpdate.valid">La date est obligatoire</small>
+              </div>
+              <div class="form-group">
+                  <label for="quantite">Quantite</label>
+                  <input type="number" #quantiteUpdate="ngModel"  [(ngModel)]="vente.quantity" name="quantiteUpdate" class="form-control" [class.is-invalid]="quantiteUpdate.touched && quantiteUpdate.invalid" id="quantity" placeholder="Entrer quantiteUpdate">
+                  <small class="text-danger" [class.d-none]="quantiteUpdate.untouched || quantiteUpdate.valid">La quantit� est obligatoire</small>
+  
+                </div>
+              <div class="form-group">
+                  <label for="total">Total</label>
+                  <input type="text" #totalUpdate="ngModel" [(ngModel)]="vente.total" name="totalUpdate"  class="form-control" [class.is-invalid]="totalUpdate.touched && totalUpdate.invalid" id="totalUpdate" placeholder="Entrer totalUpdate">
+                  <small class="text-danger" [class.d-none]="totalUpdate.untouched || totalUpdate.valid">Le total est obligatoire</small>
+  
+                </div>
+      
+              <div class="form-group">
+                  <label for="name">Client</label>
+                  <select (change)="onchange($event.target.value)" name="clientID" class="form-control">
+                      <option selected [value]="vente.clientID">{{vente.clientID}} </option>
+                      <option *ngFor="let client of clients" [value]="client.clientID">{{client.name}} {{client.familyName}}</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                <label for="name">Produit</label>
+                <select (change)="onchange($event.target.value)" name="productID" class="form-control">
+                    <option selected [value]="vente.productID">{{vente.productID}} </option>
+                    <option *ngFor="let product of products" [value]="product.productID">{{product.name}}</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" (click)="update_vente()" data-dismiss="modal"[disabled]="!vente_update_form.form.valid">Modifier achat</button>
+              </div>
+            </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-delete">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Supprimer achat</h4>
+        </div>
+        <div class="modal-body">
+          Etes vous s�r de vouloir supprimer cet achat ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="modal-btn-no" data-dismiss="modal">Non</button>
+          <button type="button" class="btn btn-danger" id="modal-btn-yes" data-dismiss="modal" (click)="delete_vente(this.vente)">Oui</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div *ngIf="loading" class="loading">
+  <div class="col-md-12">
+          <i class="fa fa-refresh fa-spin" style="margin-left: 10%;"></i>
+  </div>
+</div>
+
+
+<notifier-container></notifier-container>

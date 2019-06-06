@@ -1,0 +1,163 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Fournisseurs</h3>
+  </div>
+  <button class="btn btn-primary ml-20px button"  data-toggle="modal" data-target="#modal-add" (click)="empty_obj()">Ajouter</button>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Télephone</th>
+          <th>Adresse</th>
+          <th>Modifier/Supprimer</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let provider of providers">
+          <td>{{provider.providerID}} </td>
+          <td>{{provider.name}}</td>
+          <td>{{provider.email}}</td>
+          <td>{{provider.phone}}</td>
+          <td>{{provider.address}}</td>
+          <td>
+             <button type="button" class="btn btn-primary ml-8px" data-toggle="modal" data-target="#modal-update" (click)="get_one_provider(provider)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" (click)="get_one_provider(provider)">
+              <i class="fa fa-trash"></i>
+              </button>
+          </td>
+       </tr>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+
+<div class="modal fade" id="modal-add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Ajouter un nouveau fournisseur</h4>
+      </div>
+      <div class="modal-body">
+        <form #fournisseur_add_form="ngForm">
+          <div class="form-group">
+            <label for="name">Nom <span class="text-danger">*</span></label>
+            <input type="text" #name_provider="ngModel" [(ngModel)]="provider.name" class="form-control" [class.is-invalid]="name_provider.touched && name_provider.invalid" name="name_provider" id="name_provider"  placeholder="Entrer nom" required="true">
+            <small class="text-danger" [class.d-none]="name_provider.untouched || name_provider.valid">Nom fournisseur est obligatoire</small>
+          </div>
+          <div class="form-group">
+              <label for="name">Email <span class="text-danger">*</span></label>
+              <input type="email" #email_provider="ngModel"  [(ngModel)]="provider.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="email_provider" class="form-control" [class.is-invalid]="email_provider.touched && email_provider.invalid" id="email"  placeholder="Entrer email" required/>
+              <div *ngIf="email_provider.errors && (email_provider.invalid && email_provider.touched)">
+                  <small class="text-danger" *ngIf="email_provider.errors.pattern">Entrer un email valide</small>
+                  <small class="text-danger" *ngIf="email_provider.errors.required">Email fournisseur est obligatoire</small>
+              </div>
+            </div>
+          <div class="form-group">
+              <label for="name">Télephone <span class="text-danger">*</span></label>
+              <input type="phone" #phone_provider="ngModel" [(ngModel)]="provider.phone" name="phone"  class="form-control" id="phone_provider" [class.is-invalid]="phone_provider.touched && phone_provider.invalid"   placeholder="Entrer télephone" required>
+              <small class="text-danger" [class.d-none]="phone_provider.untouched || phone_provider.valid">Téléphone est obligatoire</small>
+            </div>
+  
+          <div class="form-group">
+              <label for="name">Adresse <span class="text-danger">*</span></label>
+              <input type="text" #address_provider="ngModel" [(ngModel)]="provider.address" name="address"  class="form-control" id="address" [class.is-invalid]="address_provider.touched && address_provider.invalid" placeholder="Entrer adresse" required>
+              <small class="text-danger" [class.d-none]="address_provider.untouched || address_provider.valid">Adresse fournisseur est obligatoire</small>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="add_provider()" data-dismiss="modal" [disabled]="!fournisseur_add_form.form.valid" >Ajouter fournisseur</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal fade" id="modal-update">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modifier un fournisseur</h4>
+      </div>
+      <div class="modal-body">
+        <form #fournisseur_update_form="ngForm">
+          <div class="form-group">
+              <label for="name">Nom <span class="text-danger">*</span></label>
+              <input type="text" #name_provider_update="ngModel" [(ngModel)]="provider.name" class="form-control" [class.is-invalid]="name_provider.touched && name_provider.invalid" name="name_provider" id="name_provider"  placeholder="Entrer nom et pr�nom" required="true">
+              <small class="text-danger" [class.d-none]="name_provider.untouched || name_provider.valid">Nom fournisseur est obligatoire</small>
+            </div>
+            <div class="form-group">
+                <label for="name">Email <span class="text-danger">*</span></label>
+                <input type="email" #email_provider_update="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  [(ngModel)]="provider.email" name="email_provider" class="form-control" [class.is-invalid]="email_provider.touched && email_provider.invalid" id="email"  placeholder="Entrer email" required/>
+                <div *ngIf="email_provider.errors && (email_provider.invalid && email_provider.touched)">
+                    <small class="text-danger" *ngIf="email_provider.errors.pattern">Entrer un email valid</small>
+                    <small class="text-danger" *ngIf="email_provider.errors.required">Email fournisseur est obligatoire</small>
+                </div>
+              </div>
+            <div class="form-group">
+                <label for="name">T�lephone <span class="text-danger">*</span></label>
+                <input type="phone" #phone_provider_update="ngModel" [(ngModel)]="provider.phone" name="phone"  class="form-control" id="phone_provider" [class.is-invalid]="phone_provider.touched && phone_provider.invalid"   placeholder="Entrer t�lephone" required>
+                <small class="text-danger" [class.d-none]="phone_provider.untouched || phone_provider.valid">T�l�phone est obligatoire</small>
+              </div>
+    
+            <div class="form-group">
+                <label for="name">Adresse <span class="text-danger">*</span></label>
+                <input type="text" #address_provider_update="ngModel" [(ngModel)]="provider.address" name="address"  class="form-control" id="address" [class.is-invalid]="address_provider.touched && address_provider.invalid" placeholder="Entrer adresse" required>
+                <small class="text-danger" [class.d-none]="address_provider.untouched || address_provider.valid">Adresse fournisseur est obligatoire</small>
+              </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="update_provider()" data-dismiss="modal" [disabled]="!fournisseur_update_form.form.valid">Modifier Fournisseur</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-delete -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-delete">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete item</h4>
+      </div>
+      <div class="modal-body">
+        Etes vous s�r de vouloir supprimer ce fournisseur ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="modal-btn-no" data-dismiss="modal">Non</button>
+        <button type="button" class="btn btn-danger" id="modal-btn-yes" data-dismiss="modal" (click)="delete_provider(this.provider)">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal-delete -->
+
+
+<div *ngIf="loading" class="loading">
+  <div class="col-md-12">
+          <i class="fa fa-refresh fa-spin" style="margin-left: 10%;"></i>
+  </div>
+</div>
+
+
+<notifier-container></notifier-container>

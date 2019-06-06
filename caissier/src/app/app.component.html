@@ -1,0 +1,117 @@
+<div class="wrapper">
+  <header class="main-header" style="">
+     <!-- Logo -->
+     <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>Barka</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Magasin</b> Elbarka</span>
+     </a>
+     <!-- Header Navbar: style can be found in header.less -->
+     <nav class="navbar navbar-assets-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-custom-menu">
+           <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <i class="fa fa-envelope-o"></i>
+                 </a>
+              </li>
+              <!-- Notifications: style can be found in dropdown.less -->
+              <li class="dropdown notifications-menu">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <i class="fa fa-bell-o"></i>
+                 </a>
+              </li>
+              <!-- Tasks: style can be found in dropdown.less -->
+              <li class="dropdown tasks-menu">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <i class="fa fa-flag-o"></i>
+                 </a>
+              </li>
+                    
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <img src="assets/img/user7-128x128.jpg" class="user-image" alt="User Image">
+                 <span class="hidden-xs">Alliance</span>
+                 </a>
+                 <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header">
+                       <img src="assets/img/user7-128x128.jpg" class="img-circle" alt="User Image">
+                       <p>
+                          Alliance - Team
+                          <small>Futur ENGINEERS </small>
+                       </p>
+                    </li>
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                       <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </li>
+                 </ul>
+              </li>
+              <!-- Control Sidebar Toggle Button -->
+              <li>
+                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li>
+           </ul>
+        </div>
+     </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+     <!-- sidebar: style can be found in sidebar.less -->
+     <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <br>
+        <div class="user-panel">
+           <div class="pull-left image">
+              <img src="assets/img/user7-128x128.jpg" class="img-circle" alt="User Image">
+           </div>
+           <div class="pull-left info">
+              <p>Alliance team</p>
+              <a><i class="fa fa-circle text-success"></i> Online</a>
+           </div>
+        </div>
+        <br>
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+           <li class="header">STATISTIQUES</li>
+           <li>
+              <a (click)="goToHomePage()">
+              <i class="fa fa-dashboard"></i> <span>Tableau de bord</span>
+              </a>
+           </li>
+
+           <li class="header">DATABASE</li>
+           <li><a (click)="goToClientMangerPage()"><i class="fa fa-circle-o text-red"></i> Clients</a></li>
+           <li><a (click)="goToProviderMangerPage()"><i class="fa fa-circle-o text-yellow"></i> Fournisseurs</a></li>
+           <li><a (click)="goToProductMangerPage()"><i class="fa fa-circle-o text-blue"></i> Produits</a></li>
+           <li><a (click)="goToVenteMangerPage()"><i class="fa fa-circle-o text-green"></i> Ventes</a></li>
+          </ul> -
+     </section>
+     <!-- /.sidebar -->
+  </aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+     <!-- Content Header (Page header) -->
+
+     <!-- data Model for error messages -->
+     
+     <!-- Main content -->
+     <section class="content">
+        <router-outlet></router-outlet>
+        <!-- /.box-body -->
+  <!-- end tmp -->
+  </section>
+  <!-- /.content -->
+  </div>
+</div>

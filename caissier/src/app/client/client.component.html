@@ -1,0 +1,175 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Clients</h3>
+  </div>
+  <button class="btn btn-primary ml-20px button"  data-toggle="modal" data-target="#modal-add" (click)="empty_obj()">Ajouter</button>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Prenom</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Télephone</th>
+          <th>Adresse</th>
+          <th>Modifier/Supprimer</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{client.clientID}} </td>
+          <td>{{client.name}}</td>
+          <td>{{client.familyName}}</td>
+          <td>{{client.email}}</td>
+          <td>{{client.phone}}</td>
+          <td>{{client.address}}</td>
+          <td>
+             <button type="button" class="btn btn-primary ml-8px" data-toggle="modal" data-target="#modal-update" (click)="get_one_client(client)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" (click)="get_one_client(client)">
+              <i class="fa fa-trash"></i>
+              </button>
+          </td>
+       </tr>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+
+<div class="modal fade" id="modal-add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Ajouter un nouveau client</h4>
+      </div>
+      <div class="modal-body">
+        <form #client_add_form="ngForm">
+          <div class="form-group">
+            <label for="name">Prenom <span class="text-danger">*</span></label>
+            <input type="text" #name_client="ngModel" [(ngModel)]="client.name" class="form-control" [class.is-invalid]="name_client.touched && name_client.invalid" name="name_client" id="name_client"  placeholder="Entrer prenom" required="true">
+            <small class="text-danger" [class.d-none]="name_client.untouched || name_client.valid">Prenom client est obligatoire</small>
+          </div>
+          <div class="form-group">
+            <label for="name">Nom <span class="text-danger">*</span></label>
+            <input type="text" #familyName_client="ngModel" [(ngModel)]="client.familyName" class="form-control" [class.is-invalid]="familyName_client.touched && familyName_client.invalid" name="familyName_client" id="familyName_client"  placeholder="Entrer nom" required="true">
+            <small class="text-danger" [class.d-none]="familyName_client.untouched || familyName_client.valid">Nom client est obligatoire</small>
+          </div>
+          <div class="form-group">
+              <label for="name">Email <span class="text-danger">*</span></label>
+              <input type="email" #email_client="ngModel"  [(ngModel)]="client.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="email_client" class="form-control" [class.is-invalid]="email_client.touched && email_client.invalid" id="email"  placeholder="Entrer email" required/>
+              <div *ngIf="email_client.errors && (email_client.invalid && email_client.touched)">
+                  <small class="text-danger" *ngIf="email_client.errors.pattern">Entrer un email valide</small>
+                  <small class="text-danger" *ngIf="email_client.errors.required">Email client est obligatoire</small>
+              </div>
+            </div>
+          <div class="form-group">
+              <label for="name">Télephone <span class="text-danger">*</span></label>
+              <input type="phone" #phone_client="ngModel" [(ngModel)]="client.phone" name="phone"  class="form-control" id="phone_client" [class.is-invalid]="phone_client.touched && phone_client.invalid"   placeholder="Entrer télephone" required>
+              <small class="text-danger" [class.d-none]="phone_client.untouched || phone_client.valid">Téléphone est obligatoire</small>
+            </div>
+  
+          <div class="form-group">
+              <label for="name">Adresse <span class="text-danger">*</span></label>
+              <input type="text" #address_client="ngModel" [(ngModel)]="client.address" name="address"  class="form-control" id="address" [class.is-invalid]="address_client.touched && address_client.invalid" placeholder="Entrer adresse" required>
+              <small class="text-danger" [class.d-none]="address_client.untouched || address_client.valid">Adresse client est obligatoire</small>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="add_client()" data-dismiss="modal" [disabled]="!client_add_form.form.valid" >Ajouter client</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal fade" id="modal-update">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modifier un client</h4>
+      </div>
+      <div class="modal-body">
+        <form #client_update_form="ngForm">
+          <div class="form-group">
+              <label for="name">Prenom <span class="text-danger">*</span></label>
+              <input type="text" #name_client_update="ngModel" [(ngModel)]="client.name" class="form-control" [class.is-invalid]="name_client.touched && name_client.invalid" name="name_client" id="name_client"  placeholder="Entrer prenom" required="true">
+              <small class="text-danger" [class.d-none]="name_client.untouched || name_client.valid">Nom client est obligatoire</small>
+            </div>
+            <div class="form-group">
+              <label for="name">Nom <span class="text-danger">*</span></label>
+              <input type="text" #familyName_client_update="ngModel" [(ngModel)]="client.familyName" class="form-control" [class.is-invalid]="familyName_client.touched && familyName_client.invalid" name="familyName_client" id="familyName_client"  placeholder="Entrer nom" required="true">
+              <small class="text-danger" [class.d-none]="familyName_client.untouched || familyName_client.valid">Nom client est obligatoire</small>
+            </div>  
+            <div class="form-group">
+                <label for="name">Email <span class="text-danger">*</span></label>
+                <input type="email" #email_client_update="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  [(ngModel)]="client.email" name="email_client" class="form-control" [class.is-invalid]="email_client.touched && email_client.invalid" id="email"  placeholder="Entrer email" required/>
+                <div *ngIf="email_client.errors && (email_client.invalid && email_client.touched)">
+                    <small class="text-danger" *ngIf="email_client.errors.pattern">Entrer un email valid</small>
+                    <small class="text-danger" *ngIf="email_client.errors.required">Email client est obligatoire</small>
+                </div>
+              </div>
+            <div class="form-group">
+                <label for="name">Telephone <span class="text-danger">*</span></label>
+                <input type="phone" #phone_client_update="ngModel" [(ngModel)]="client.phone" name="phone"  class="form-control" id="phone_client" [class.is-invalid]="phone_client.touched && phone_client.invalid"   placeholder="Entrer t�lephone" required>
+                <small class="text-danger" [class.d-none]="phone_client.untouched || phone_client.valid">T�l�phone est obligatoire</small>
+              </div>
+    
+            <div class="form-group">
+                <label for="name">Adresse <span class="text-danger">*</span></label>
+                <input type="text" #address_client_update="ngModel" [(ngModel)]="client.address" name="address"  class="form-control" id="address" [class.is-invalid]="address_client.touched && address_client.invalid" placeholder="Entrer adresse" required>
+                <small class="text-danger" [class.d-none]="address_client.untouched || address_client.valid">Adresse client est obligatoire</small>
+              </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary" (click)="update_client()" data-dismiss="modal" [disabled]="!client_update_form.form.valid">Modifier Client</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal-delete -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-delete">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Supprimer client</h4>
+      </div>
+      <div class="modal-body">
+        Etes vous sur de vouloir supprimer ce client ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="modal-btn-no" data-dismiss="modal">Non</button>
+        <button type="button" class="btn btn-danger" id="modal-btn-yes" data-dismiss="modal" (click)="delete_client(this.client)">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.modal-delete -->
+
+
+<div *ngIf="loading" class="loading">
+  <div class="col-md-12">
+          <i class="fa fa-refresh fa-spin" style="margin-left: 10%;"></i>
+  </div>
+</div>
+
+
+<notifier-container></notifier-container>
